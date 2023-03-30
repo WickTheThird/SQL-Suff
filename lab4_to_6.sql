@@ -11,7 +11,8 @@
 #where actor.actor_id = film_actor.actor_id; # lab4 q2.1
 
 #select distinct first_name from actor, film_actor
-#where (actor.actor_id = film_actor.actor_id) and first_name = "John"; # lab4 q2.2
+#where (actor.actor_id = film_actor.actor_id) and first_name = "John"; # lab4 q2.2+
+
 
 # this is lab 5 task 1
 #USE sakila_bumbuf2db;
@@ -71,7 +72,39 @@
 #where country.Code = countrylanguage.CountryCode and (select sum(population*percentage) from country, countrylanguage) > 1000000
 #group by language desc;
 
-# use classicmodels_bumbuf2db;
+#use classicmodels_bumbuf2db;
 
+#3
+#select productName as Name, productDescription as Description, sum(orderdetails.quantityOrdered) as NoSales from products, orders, orderdetails, payments
+#where products.productCode = orderdetails.productCode and orderdetails.orderNumber = orders.orderNumber and orders.customerNumber = payments.customerNumber and status = 'Shipped'
+#group by productName
+#order by NoSales desc
+#limit 3;
 
+#4
+#select productLine, sum(amount) as Profits from products, orderdetails, orders, payments
+#where products.productCode = orderdetails.productCode and orderdetails.orderNumber = orders.orderNumber and orders.customerNumber = payments.customerNumber and orders.status = 'Shipped'
+#group by products.productLine
+#order by Profits desc
+#limit 1;
 
+#5
+#select distinct contactFirstName from customers, sakila_bumbuf2db.customer
+#where contactFirstName = first_name
+#group by first_name;
+
+#6
+#select * from customers
+#where country in (select country from customers group by country having min(creditLimit) > (select max(creditlimit) from customers where country = 'Austria'));
+
+#7
+#select contactLastName, city, count(customers.customerNumber) as noPay from customers, orders
+#where  customers.customerNumber = orders.customerNumber
+#group by customers.customerNumber
+#having  noPay >= 5
+#order by noPay desc;
+
+#8
+#select productName, productVendor, sum(quantityOrdered) as QuantityOrdered from products, orderdetails
+#where products.productCode = orderdetails.productCode
+#group by productName desc;
