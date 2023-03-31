@@ -108,3 +108,21 @@
 #select productName, productVendor, sum(quantityOrdered) as QuantityOrdered from products, orderdetails
 #where products.productCode = orderdetails.productCode
 #group by productName desc;
+
+
+#9
+#use world_bumbuf2db;
+#select country.name, count(city.name) as NoCities, country.population as TotalPopulation from city inner join country
+#on country.code = city.CountryCode
+#where 10000000 < country.population
+#group by country.name desc
+#order by NoCities desc;
+
+
+#10
+#select distinct country.name, count(language) as NoLang from country join city
+#on country.Code = city.CountryCode, countrylanguage
+#where country.name in (select country.name from country join city on country.code = city.CountryCode#
+#	where city.Population > 8000000)
+#group by country.name
+#order by NoLang;
